@@ -13,7 +13,7 @@ class TempDirectoryManager:
     secure cleanup with retry mechanisms for locked files.
     """
 
-    def __init__(self, temp_dir_factory: Callable[[], TemporaryDirectory] = TemporaryDirectory):
+    def __init__(self, temp_dir_factory: Callable[[], TemporaryDirectory] = lambda: TemporaryDirectory(ignore_cleanup_errors=True)):
         """
         Initialize temporary directory manager.
 
@@ -93,4 +93,4 @@ class TempDirectoryManager:
         Continues cleanup even if some files resist deletion.
         """
         for temp_dir in self._temp_dirs:
-            shutil.rmtree(temp_dir.name, onerror=self.handle_cleanup_error)
+            shutil.rmtree(temp_dir.name, ignore_errors=True)
