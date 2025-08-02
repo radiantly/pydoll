@@ -75,7 +75,7 @@ class TempDirectoryManager:
         exc_type, exc_value, _ = exc_info
 
         if exc_type is PermissionError:
-            if Path(path).name in matches:
+            if Path(path).name in matches or True:
                 try:
                     self.retry_process_file(func, path)
                     return
